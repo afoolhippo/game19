@@ -45,6 +45,11 @@ body{
   text-align:center;
 }
 
+#startBtn{
+  padding:16px 24px;
+  font-size:18px;
+}
+
 #gameTitleBar,
 #resultTitleBar{
   width:100%;

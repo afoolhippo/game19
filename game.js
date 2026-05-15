@@ -38,6 +38,9 @@ const seOut = new Audio("se_out.mp3");
 bgm.loop = true;
 bgm.volume = 0.45;
 
+seGood.volume = 0.3;
+seBad.volume = 0.3;
+
 const customers = [
   "🧓",
   "🧑‍💼",
@@ -62,6 +65,9 @@ const resultScreen =
 
 const titleImage =
   document.getElementById("titleImage");
+
+const startBtn =
+  document.getElementById("startBtn");
 
 const retryBtn =
   document.getElementById("retryBtn");
@@ -176,7 +182,7 @@ let progress = 0;
 
 let score = 0;
 
-let time = 60;
+let time = 80;
 
 let timer;
 
@@ -316,7 +322,7 @@ function startGame(){
 
   score = 0;
 
-  time = 60;
+  time = 80;
 
   progress = 0;
 
@@ -547,6 +553,15 @@ backBtn.addEventListener(
 );
 
 titleImage.addEventListener(
+  "click",
+  ()=>{
+
+    startGame();
+
+  }
+);
+
+startBtn.addEventListener(
   "click",
   ()=>{
 
