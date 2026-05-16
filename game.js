@@ -35,7 +35,7 @@ const seBad = new Audio("se_bad.mp3");
 const seIn = new Audio("se_in.mp3");
 const seOut = new Audio("se_out.mp3");
 
-bgm.loop = true;
+bgm.loop = false;
 bgm.volume = 0.45;
 
 seGood.volume = 0.3;
@@ -89,6 +89,12 @@ const timeEl =
 
 const customerEl =
   document.getElementById("customer");
+
+const customerWrap =
+  document.getElementById("customerWrap");
+
+const speech =
+  document.getElementById("speech");
 
 const orderNameEl =
   document.getElementById("orderName");
@@ -248,31 +254,6 @@ function renderRecipe(){
 
 }
 
-function createOrder(){
-
-  currentOrder =
-    randomOrder();
-
-  currentRecipe =
-    recipes[currentOrder];
-
-  progress = 0;
-
-  customerEl.textContent =
-    randomCustomer();
-
-  orderNameEl.textContent =
-    currentOrder;
-
-  renderRecipe();
-
-  if(navigator.vibrate){
-
-    navigator.vibrate(40);
-  }
-
-}
-
 function updateUI(){
 
   scoreEl.textContent =
@@ -294,7 +275,7 @@ function showPopup(text,type){
 
     popup.className = "";
 
-  },500);
+  },700);
 
 }
 
@@ -303,10 +284,68 @@ function setTaisho(type){
   kitchenImage.src =
     `hakotarou_${type}.png`;
 
+}
+
+function resetTaisho(){
+
+  kitchenImage.src =
+    "hakotarou_normal.png";
+
+}
+
+function createOrder(){
+
+  currentOrder =
+    randomOrder();
+
+  currentRecipe =
+    recipes[currentOrder];
+
+  progress = 0;
+
+  customerEl.textContent =
+    randomCustomer();
+
+  orderNameEl.textContent =
+    currentOrder;
+
+  renderRecipe();
+
+  speech.classList.remove("show");
+  customerWrap.classList.remove("hide");
+
+  if(navigator.vibrate){
+
+    navigator.vibrate(40);
+  }
+
   setTimeout(()=>{
 
-    kitchenImage.src =
-      "hakotarou_normal.png";
+    customerWrap.classList.add("show");
+
+  },50);
+
+  setTimeout(()=>{
+
+    speech.classList.add("show");
+
+  },350);
+
+}
+
+function nextCustomer(){
+
+  speech.classList.remove("show");
+
+  customerWrap.classList.remove("show");
+
+  customerWrap.classList.add("hide");
+
+  setTimeout(()=>{
+
+    resetTaisho();
+
+    createOrder();
 
   },500);
 
@@ -327,8 +366,6 @@ function startGame(){
   progress = 0;
 
   updateUI();
-
-  createOrder();
 
   titleScreen.classList.remove("active");
 
@@ -351,6 +388,12 @@ function startGame(){
 
   },1000);
 
+  setTimeout(()=>{
+
+    createOrder();
+
+  },5000);
+
 }
 
 function success(){
@@ -361,7 +404,7 @@ function success(){
   setTaisho("good");
 
   showPopup(
-    "成功！",
+    "あいよ！",
     "success"
   );
 
@@ -371,9 +414,9 @@ function success(){
 
   setTimeout(()=>{
 
-    createOrder();
+    nextCustomer();
 
-  },250);
+  },1200);
 
 }
 
@@ -385,13 +428,19 @@ function miss(){
   setTaisho("bad");
 
   showPopup(
-    "失敗！",
+    "お待たせしました💦",
     "miss"
   );
 
   progress = 0;
 
   renderRecipe();
+
+  setTimeout(()=>{
+
+    resetTaisho();
+
+  },1200);
 
 }
 
@@ -405,6 +454,12 @@ document
 
         const action =
           btn.dataset.action;
+
+        if(
+          currentRecipe.length === 0
+        ){
+          return;
+        }
 
         if(
           currentRecipe[
