@@ -428,7 +428,7 @@ function miss(){
   setTaisho("bad");
 
   showPopup(
-    "お待たせしました💦",
+    "💦💦",
     "miss"
   );
 
