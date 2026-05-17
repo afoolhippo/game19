@@ -141,7 +141,7 @@ const recipes = {
     "niboshi"
   ],
 
-  "かす":[
+  "かすうどん":[
     "men",
     "kasu",
     "negi"
@@ -170,6 +170,29 @@ const recipes = {
   ]
 };
 
+const recipeNames = [
+
+  "うどん",
+  "うどん",
+  "うどん",
+
+  "月見うどん",
+  "月見うどん",
+
+  "チャニボ",
+
+  "かすうどん",
+
+  "浅利バター",
+
+  "めし",
+
+  "TKG",
+
+  "うどんよもぎ麺"
+
+];
+
 const labels = {
 
   men:"麺",
@@ -185,8 +208,8 @@ const labels = {
   gohan:"ごはん"
 };
 
-const recipeNames =
-  Object.keys(recipes);
+const recipeNamesLength =
+  recipeNames.length;
 
 let currentOrder = "";
 
@@ -205,7 +228,7 @@ function randomOrder(){
   return recipeNames[
     Math.floor(
       Math.random() *
-      recipeNames.length
+      recipeNamesLength
     )
   ];
 }
@@ -436,7 +459,7 @@ function miss(){
   setTaisho("bad");
 
   showPopup(
-    "お待たせしました💦",
+    "💦💦",
     "miss"
   );
 
@@ -526,7 +549,7 @@ function endGame(){
   finalScoreEl.textContent =
     `${score}人前`;
 
-  if(score >= 45){
+  if(score >= 15){
 
     rankEl.textContent =
       "爆速製麺王";
@@ -534,7 +557,7 @@ function endGame(){
     commentEl.textContent =
       "行列が止まらない。";
 
-  }else if(score >= 25){
+  }else if(score >= 8){
 
     rankEl.textContent =
       "行列名人";
@@ -585,7 +608,13 @@ retryBtn.addEventListener(
   "click",
   ()=>{
 
-    startGame();
+    clearInterval(timer);
+
+    bgm.pause();
+
+    resultScreen.classList.remove("active");
+
+    titleScreen.classList.add("active");
 
   }
 );
