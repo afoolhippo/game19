@@ -246,7 +246,7 @@ button:active{
   border-radius:8px;
   padding:6px 9px;
   background:white;
-  font-size:17px;
+  font-size:16px;
 }
 
 .recipeBox.active{
@@ -268,10 +268,9 @@ button:active{
 }
 
 .cookBtn,
-#cancelBtn,
-#dummyBtn{
+#cancelBtn{
   padding:13px 2px;
-  font-size:14px;
+  font-size:13px;
 }
 
 #resultScreen{

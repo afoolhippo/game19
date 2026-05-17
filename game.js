@@ -119,46 +119,53 @@ const commentEl =
 
 const recipes = {
 
-  "肉うどん":[
+  "うどん":[
     "men",
-    "dashi",
     "beef",
+    "gyushi",
     "negi"
+  ],
+
+  "月見うどん":[
+    "men",
+    "beef",
+    "gyushi",
+    "negi",
+    "egg"
   ],
 
   "チャニボ":[
     "men",
-    "dashi",
-    "pork",
-    "oil"
+    "chamibuta",
+    "negi",
+    "niboshi"
   ],
 
-  "かすうどん":[
+  "かす":[
     "men",
-    "dashi",
     "kasu",
     "negi"
   ],
 
-  "ごぼ天":[
+  "浅利バター":[
     "men",
-    "dashi",
-    "gobo",
+    "asari",
     "negi"
   ],
 
-  "素うどん":[
-    "men",
-    "dashi",
-    "negi"
+  "めし":[
+    "gohan"
   ],
 
-  "全部のせ":[
-    "men",
-    "dashi",
+  "TKG":[
+    "gohan",
+    "egg"
+  ],
+
+  "うどんよもぎ麺":[
+    "yomogi",
     "beef",
-    "gobo",
-    "egg",
+    "gyushi",
     "negi"
   ]
 };
@@ -166,15 +173,16 @@ const recipes = {
 const labels = {
 
   men:"麺",
-  dashi:"だし",
+  yomogi:"よもぎ麺",
   beef:"牛肉",
-  pork:"豚肉",
-  oil:"煮干油",
+  gyushi:"牛脂",
+  chamibuta:"茶美豚",
+  niboshi:"煮干脂",
   kasu:"かす",
-  gobo:"ごぼ天",
-  egg:"卵",
+  asari:"あさり",
   negi:"ネギ",
-  wakame:"わかめ"
+  egg:"卵",
+  gohan:"ごはん"
 };
 
 const recipeNames =
@@ -428,7 +436,7 @@ function miss(){
   setTaisho("bad");
 
   showPopup(
-    "💦💦",
+    "お待たせしました💦",
     "miss"
   );
 
