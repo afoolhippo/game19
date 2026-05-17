@@ -549,30 +549,30 @@ function endGame(){
   finalScoreEl.textContent =
     `${score}人前`;
 
-  if(score >= 15){
+if(score >= 15){
 
-    rankEl.textContent =
-      "爆速製麺王";
+  rankEl.textContent =
+    "史上最高杯数";
 
-    commentEl.textContent =
-      "行列が止まらない。";
+  commentEl.textContent =
+    "今日も大繁盛！";
 
-  }else if(score >= 8){
+}else if(score >= 8){
 
-    rankEl.textContent =
-      "行列名人";
+  rankEl.textContent =
+    "大行列";
 
-    commentEl.textContent =
-      "今日も大繁盛！";
+  commentEl.textContent =
+    "行列が止まらない！";
 
-  }else{
+}else{
 
-    rankEl.textContent =
-      "見習い大将";
+  rankEl.textContent =
+    "見習い大将";
 
-    commentEl.textContent =
-      "まだまだ修行中。";
-  }
+  commentEl.textContent =
+    "まだまだ修行中。";
+}
 
 }
 
