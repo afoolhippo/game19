@@ -2,214 +2,105 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8" />
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>箱太郎伝説</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link
-  href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- タイトル -->
 <div id="titleScreen" class="screen active">
-
-  <img
-    src="title.png"
-    id="titleImage"
-  />
+  <img src="title.png" id="titleImage" />
 
   <p class="rule">
     爆速でうどんを提供して、<br>
     最高杯数を目指せ！
   </p>
 
-  <button id="startBtn">
-    タップしてスタート
-  </button>
-
+  <button id="startBtn">タップしてスタート</button>
 </div>
 
-<!-- ゲーム -->
 <div id="gameScreen" class="screen">
 
   <div id="gameTitleBar">
-    <div id="gameTitle">
-      脂、足りてますか？
-    </div>
+    <div id="gameTitle">脂、足りてますか？</div>
   </div>
 
   <div class="topUI">
-
-    <div>
-      残り
-      <span id="time">80</span>秒
-    </div>
-
-    <div>
-      <span id="score">0</span>人前
-    </div>
-
+    <div>残り<span id="time">80</span>秒</div>
+    <div><span id="score">0</span>人前</div>
   </div>
 
-  <button id="backBtn">
-    タイトルへ戻る
-  </button>
+  <button id="backBtn">タイトルへ戻る</button>
 
-  <!-- 客 -->
   <div id="customerArea">
-
     <div id="customerWrap">
-
-      <div id="customer">
-        🧓
-      </div>
-
+      <div id="customer">🧓</div>
       <div id="speech">
-
-        <div id="orderName">
-          うどん
-        </div>
-
+        <div id="orderName">うどん</div>
       </div>
-
     </div>
-
   </div>
 
-  <!-- テーブル -->
   <div id="table"></div>
 
-  <!-- 厨房 -->
   <div id="kitchen">
-
-    <img
-      src="hakotarou_normal.png"
-      id="kitchenImage"
-    />
-
+    <img src="hakotarou_normal.png" id="kitchenImage" />
     <div id="feedbackArea">
       <div id="popup"></div>
     </div>
-
   </div>
 
-  <!-- レシピ -->
   <div id="recipeArea">
-
-    <div class="recipeTitle">
-      作り方
-    </div>
-
+    <div class="recipeTitle">作り方</div>
     <div id="recipeText"></div>
-
   </div>
 
-  <!-- ボタン -->
   <div id="buttons">
+    <button class="cookBtn" data-action="men">麺</button>
+    <button class="cookBtn" data-action="yomogi">よもぎ麺</button>
+    <button class="cookBtn" data-action="beef">牛肉</button>
+    <button class="cookBtn" data-action="gyushi">牛脂</button>
 
-    <button class="cookBtn" data-action="men">
-      麺
-    </button>
+    <button class="cookBtn" data-action="chamibuta">茶美豚</button>
+    <button class="cookBtn" data-action="niboshi">煮干脂</button>
+    <button class="cookBtn" data-action="kasu">かす</button>
+    <button class="cookBtn" data-action="asari">あさり</button>
 
-    <button class="cookBtn" data-action="yomogi">
-      よもぎ麺
-    </button>
-
-    <button class="cookBtn" data-action="beef">
-      牛肉
-    </button>
-
-    <button class="cookBtn" data-action="gyushi">
-      牛脂
-    </button>
-
-    <button class="cookBtn" data-action="chamibuta">
-      茶美豚
-    </button>
-
-    <button class="cookBtn" data-action="niboshi">
-      煮干脂
-    </button>
-
-    <button class="cookBtn" data-action="kasu">
-      かす
-    </button>
-
-    <button class="cookBtn" data-action="asari">
-      あさり
-    </button>
-
-    <button class="cookBtn" data-action="negi">
-      ネギ
-    </button>
-
-    <button class="cookBtn" data-action="egg">
-      卵
-    </button>
-
-    <button class="cookBtn" data-action="gohan">
-      ごはん
-    </button>
-
-    <button id="cancelBtn">
-      リセット
-    </button>
-
+    <button class="cookBtn" data-action="negi">ネギ</button>
+    <button class="cookBtn" data-action="egg">卵</button>
+    <button class="cookBtn" data-action="gohan">ごはん</button>
+    <button id="cancelBtn">リセット</button>
   </div>
 
 </div>
 
-<!-- 結果 -->
 <div id="resultScreen" class="screen">
 
-  <div id="resultTitleBar">
-    箱太郎伝説
-  </div>
+  <div id="resultTitleBar">箱太郎伝説</div>
 
-  <h2 id="rank">
-    行列名人
-  </h2>
+  <h2 id="rank">見習い大将</h2>
 
-  <div id="finalScore">
-    0人前
-  </div>
+  <div id="finalScore">0人前</div>
 
-  <p id="comment">
-    今日も大繁盛！
-  </p>
+  <p id="comment">まだまだ修行中。</p>
 
-  <div class="resultBtns">
-
-    <button id="shareBtn">
-      Xでシェア
-    </button>
-
-    <button id="retryBtn">
-      タイトルへ戻る
-    </button>
-
-    <button id="homeBtn">
-      カバゲーセンへ
-    </button>
-
+  <div id="resultButtons" class="resultButtons hidden">
+    <button id="shareBtn" class="resultButton">Xでシェア</button>
+    <button id="registerBtn" class="resultButton">記録を登録</button>
+    <button id="retryBtn" class="resultButton">タイトルへ戻る</button>
+    <button id="homeBtn" class="resultButton">カバゲーセンへ</button>
   </div>
 
 </div>
 
-<script src="game.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="game.js?v=20260529-1"></script>
 
 </body>
 </html>

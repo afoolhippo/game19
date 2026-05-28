@@ -29,6 +29,21 @@ if(window.visualViewport){
     );
 }
 
+const GAME_ID = "game_hakotarou";
+const GAME_TITLE = "箱太郎伝説";
+
+const SUPABASE_URL =
+  "https://gmncxnybsovlallxgnkd.supabase.co";
+
+const SUPABASE_ANON_KEY =
+  "sb_publishable_ly3h5OhL8HDSHhYdmJq_Fw_9pG3mhla";
+
+const kabaDb =
+  supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
 const bgm = new Audio("bgm.mp3");
 const seGood = new Audio("se_good.mp3");
 const seBad = new Audio("se_bad.mp3");
@@ -69,17 +84,23 @@ const titleImage =
 const startBtn =
   document.getElementById("startBtn");
 
-const retryBtn =
-  document.getElementById("retryBtn");
-
 const shareBtn =
   document.getElementById("shareBtn");
+
+const registerBtn =
+  document.getElementById("registerBtn");
+
+const retryBtn =
+  document.getElementById("retryBtn");
 
 const homeBtn =
   document.getElementById("homeBtn");
 
 const backBtn =
   document.getElementById("backBtn");
+
+const resultButtons =
+  document.getElementById("resultButtons");
 
 const scoreEl =
   document.getElementById("score");
@@ -223,6 +244,8 @@ let time = 80;
 
 let timer;
 
+let scoreRegistered = false;
+
 function randomOrder(){
 
   return recipeNames[
@@ -265,10 +288,7 @@ function renderRecipe(){
 
     recipeTextEl.appendChild(box);
 
-    if(
-      index <
-      currentRecipe.length - 1
-    ){
+    if(index < currentRecipe.length - 1){
 
       const arrow =
         document.createElement("div");
@@ -282,7 +302,6 @@ function renderRecipe(){
     }
 
   });
-
 }
 
 function updateUI(){
@@ -307,21 +326,18 @@ function showPopup(text,type){
     popup.className = "";
 
   },700);
-
 }
 
 function setTaisho(type){
 
   kitchenImage.src =
     `hakotarou_${type}.png`;
-
 }
 
 function resetTaisho(){
 
   kitchenImage.src =
     "hakotarou_normal.png";
-
 }
 
 function createOrder(){
@@ -361,7 +377,6 @@ function createOrder(){
     speech.classList.add("show");
 
   },350);
-
 }
 
 function nextCustomer(){
@@ -379,7 +394,29 @@ function nextCustomer(){
     createOrder();
 
   },500);
+}
 
+function resetRegisterButton(){
+
+  scoreRegistered = false;
+
+  registerBtn.disabled = false;
+
+  registerBtn.textContent =
+    "記録を登録";
+
+  resultButtons.classList.add("hidden");
+}
+
+function showResultButtonsLater(){
+
+  resultButtons.classList.add("hidden");
+
+  setTimeout(()=>{
+
+    resultButtons.classList.remove("hidden");
+
+  },1500);
 }
 
 function startGame(){
@@ -396,7 +433,20 @@ function startGame(){
 
   progress = 0;
 
+  currentRecipe = [];
+
   updateUI();
+
+  resetRegisterButton();
+
+  popup.className = "";
+
+  speech.classList.remove("show");
+
+  customerWrap.classList.remove("show");
+  customerWrap.classList.add("hide");
+
+  resetTaisho();
 
   titleScreen.classList.remove("active");
 
@@ -424,7 +474,6 @@ function startGame(){
     createOrder();
 
   },5000);
-
 }
 
 function success(){
@@ -448,7 +497,6 @@ function success(){
     nextCustomer();
 
   },1200);
-
 }
 
 function miss(){
@@ -472,7 +520,6 @@ function miss(){
     resetTaisho();
 
   },1200);
-
 }
 
 document
@@ -486,26 +533,17 @@ document
         const action =
           btn.dataset.action;
 
-        if(
-          currentRecipe.length === 0
-        ){
+        if(currentRecipe.length === 0){
           return;
         }
 
-        if(
-          currentRecipe[
-            progress
-          ] === action
-        ){
+        if(currentRecipe[progress] === action){
 
           progress++;
 
           renderRecipe();
 
-          if(
-            progress >=
-            currentRecipe.length
-          ){
+          if(progress >= currentRecipe.length){
 
             success();
           }
@@ -517,7 +555,6 @@ document
 
       }
     );
-
   });
 
 document
@@ -529,13 +566,14 @@ document
       progress = 0;
 
       renderRecipe();
-
     }
   );
 
 function endGame(){
 
   clearInterval(timer);
+
+  currentRecipe = [];
 
   bgm.pause();
 
@@ -549,31 +587,32 @@ function endGame(){
   finalScoreEl.textContent =
     `${score}人前`;
 
-if(score >= 15){
+  if(score >= 15){
 
-  rankEl.textContent =
-    "史上最高杯数";
+    rankEl.textContent =
+      "史上最高杯数";
 
-  commentEl.textContent =
-    "今日も大繁盛！";
+    commentEl.textContent =
+      "今日も大繁盛！";
 
-}else if(score >= 8){
+  }else if(score >= 8){
 
-  rankEl.textContent =
-    "大行列";
+    rankEl.textContent =
+      "大行列";
 
-  commentEl.textContent =
-    "行列が止まらない！";
+    commentEl.textContent =
+      "行列が止まらない！";
 
-}else{
+  }else{
 
-  rankEl.textContent =
-    "見習い大将";
+    rankEl.textContent =
+      "見習い大将";
 
-  commentEl.textContent =
-    "まだまだ修行中。";
-}
+    commentEl.textContent =
+      "まだまだ修行中。";
+  }
 
+  showResultButtonsLater();
 }
 
 shareBtn.addEventListener(
@@ -600,7 +639,66 @@ https://afoolhippo.github.io/
       url,
       "_blank"
     );
+  }
+);
 
+registerBtn.addEventListener(
+  "click",
+  async ()=>{
+
+    if(scoreRegistered){
+
+      alert("この記録は登録済みです");
+
+      return;
+    }
+
+    const nickname =
+      prompt(
+        "ニックネームを入力してね",
+        "匿名カバ"
+      );
+
+    if(!nickname){
+      return;
+    }
+
+    registerBtn.disabled = true;
+
+    registerBtn.textContent =
+      "登録中...";
+
+    const { error } =
+      await kabaDb
+        .from("kaba_scores")
+        .insert({
+          game_id: GAME_ID,
+          game_title: GAME_TITLE,
+          nickname: nickname,
+          rank_title: rankEl.textContent,
+          score: score
+        });
+
+    if(error){
+
+      console.error(error);
+
+      registerBtn.disabled = false;
+
+      registerBtn.textContent =
+        "記録を登録";
+
+      alert("登録に失敗しました");
+
+      return;
+    }
+
+    scoreRegistered = true;
+
+    registerBtn.textContent =
+      "登録済み";
+
+    alert("記録を登録しました！");
   }
 );
 
@@ -615,7 +713,6 @@ retryBtn.addEventListener(
     resultScreen.classList.remove("active");
 
     titleScreen.classList.add("active");
-
   }
 );
 
@@ -624,8 +721,7 @@ homeBtn.addEventListener(
   ()=>{
 
     location.href =
-      "https://afoolhippo.github.io/home/";
-
+      "https://afoolhippo.github.io/home/?skipTitle=1";
   }
 );
 
@@ -640,7 +736,6 @@ backBtn.addEventListener(
     gameScreen.classList.remove("active");
 
     titleScreen.classList.add("active");
-
   }
 );
 
@@ -649,7 +744,6 @@ titleImage.addEventListener(
   ()=>{
 
     startGame();
-
   }
 );
 
@@ -658,6 +752,5 @@ startBtn.addEventListener(
   ()=>{
 
     startGame();
-
   }
 );
